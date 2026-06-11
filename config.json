@@ -1,0 +1,30 @@
+{
+  "voice_enabled": true,
+  "voice_name": "Daniel",
+  "scan_interval_minutes": 15,
+  "twelvedata_api_key": "f660a0f428614063a9fe111a2c811a2b",
+  "pairs": [
+    "XAU/USD",
+    "EUR/GBP",
+    "GBP/USD",
+    "USD/JPY",
+    "AUD/USD",
+    "USD/CAD"
+  ],
+  "filters": {
+    "min_score": 70,
+    "require_zone_confluence": true,
+    "trend_filter": "with_trend"
+  },
+  "risk": {
+    "account_size": 5000,
+    "risk_per_trade": 1,
+    "max_trades_per_day": 2,
+    "daily_loss_limit": 250
+  },
+  "timeframes": {
+    "D1": {"interval": "1day", "outputsize": 60},
+    "H4": {"interval": "4h",   "outputsize": 90},
+    "H1": {"interval": "1h",   "outputsize": 72}
+  }
+}
