@@ -89,13 +89,22 @@ def detect_liquidity_sweep(df, zone):
     lows   = df['Low'].values
     closes = df['Close'].values
     opens  = df['Open'].values
-    for i in range(-3, 0):
+    for i in range(-5, -1):
+        next_i = i + 1
         if zone['type'] == 'demand':
-            if lows[i] < zone['low'] and closes[i] > zone['low'] and closes[i] > opens[i]:
-                return True, {'type':'demand_sweep','swept_to':lows[i],'closed_at':closes[i],'label':'Liquidity sweep below demand'}
+            # Sweep candle: wicks below zone and closes back inside
+            sweep = lows[i] < zone['low'] and closes[i] > zone['low'] and closes[i] > opens[i]
+            # Confirmation candle: next candle is bullish
+            confirm = closes[next_i] > opens[next_i]
+            if sweep and confirm:
+                return True, {'type':'demand_sweep','swept_to':lows[i],'closed_at':closes[i],'confirmed_at':closes[next_i],'label':'Liquidity sweep below demand — confirmed'}
         elif zone['type'] == 'supply':
-            if highs[i] > zone['high'] and closes[i] < zone['high'] and closes[i] < opens[i]:
-                return True, {'type':'supply_sweep','swept_to':highs[i],'closed_at':closes[i],'label':'Liquidity sweep above supply'}
+            # Sweep candle: wicks above zone and closes back inside
+            sweep = highs[i] > zone['high'] and closes[i] < zone['high'] and closes[i] < opens[i]
+            # Confirmation candle: next candle is bearish
+            confirm = closes[next_i] < opens[next_i]
+            if sweep and confirm:
+                return True, {'type':'supply_sweep','swept_to':highs[i],'closed_at':closes[i],'confirmed_at':closes[next_i],'label':'Liquidity sweep above supply — confirmed'}
     return False, None
 
 def price_in_zone(price, zone, buffer_pct=0.002):
