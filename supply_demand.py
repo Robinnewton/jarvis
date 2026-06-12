@@ -47,9 +47,10 @@ def detect_zones(df, avg_body_lookback=20):
     def _is_large_body(idx, avg_body_val):
         return abs(closes[idx] - opens[idx]) > avg_body_val * 1.2
 
-    for i in range(max(2, avg_body_lookback), len(df) - 1):
+    for i in range(3, len(df) - 1):
         # Calculate average body size over a fixed lookback window
-        avg_body_current_window = np.mean(np.abs(closes[i - avg_body_lookback : i] - opens[i - avg_body_lookback : i]))
+        lookback_start = max(0, i - avg_body_lookback)
+        avg_body_current_window = np.mean(np.abs(closes[lookback_start : i] - opens[lookback_start : i]))
 
         if avg_body_current_window == 0:
             continue
@@ -60,26 +61,56 @@ def detect_zones(df, avg_body_lookback=20):
         curr_is_bullish      = _is_bullish_candle(i) and _is_large_body(i, avg_body_current_window)
 
         if prev_prev_is_bearish and prev_is_small_body and curr_is_bullish:
-            zones.append({
-                'type': 'demand',
-                'high': max(highs[i-1], highs[i-2]),
-                'low': min(lows[i-1], lows[i-2]),
-                'strength': 'strong',
-                'index': i
-            })
+                zone_high = max(highs[i-1], highs[i-2])
+                zone_low  = min(lows[i-1], lows[i-2])
+                # Measure how far price moved away from zone
+                move_away = abs(closes[i] - zone_high) / avg_body_current_window if avg_body_current_window > 0 else 0
+                # Count retests — how many candles after zone touched it without breaking
+                retests = sum(1 for j in range(i+1, len(df)) if lows[j] <= zone_high and closes[j] >= zone_low)
+                # Assign strength
+                if move_away >= 3 and retests == 0:
+                    strength = 'strong'
+                elif move_away >= 1.5 or retests <= 2:
+                    strength = 'medium'
+                else:
+                    strength = 'weak'
+                zones.append({
+                    'type': 'demand',
+                    'high': zone_high,
+                    'low': zone_low,
+                    'strength': strength,
+                    'move_away': round(move_away, 2),
+                    'retests': retests,
+                    'index': i
+                })
 
         # Conditions for Supply Zone (Bullish -> Small Body Base -> Bearish)
         prev_prev_is_bullish = _is_bullish_candle(i-2)
         curr_is_bearish      = _is_bearish_candle(i) and _is_large_body(i, avg_body_current_window)
 
         if prev_prev_is_bullish and prev_is_small_body and curr_is_bearish:
-            zones.append({
-                'type': 'supply',
-                'high': max(highs[i-1], highs[i-2]),
-                'low': min(lows[i-1], lows[i-2]),
-                'strength': 'strong',
-                'index': i
-            })
+                zone_high = max(highs[i-1], highs[i-2])
+                zone_low  = min(lows[i-1], lows[i-2])
+                # Measure how far price moved away from zone
+                move_away = abs(closes[i] - zone_low) / avg_body_current_window if avg_body_current_window > 0 else 0
+                # Count retests — how many candles after zone touched it without breaking
+                retests = sum(1 for j in range(i+1, len(df)) if highs[j] >= zone_low and closes[j] <= zone_high)
+                # Assign strength
+                if move_away >= 3 and retests == 0:
+                    strength = 'strong'
+                elif move_away >= 1.5 or retests <= 2:
+                    strength = 'medium'
+                else:
+                    strength = 'weak'
+                zones.append({
+                    'type': 'supply',
+                    'high': zone_high,
+                    'low': zone_low,
+                    'strength': strength,
+                    'move_away': round(move_away, 2),
+                    'retests': retests,
+                    'index': i
+                })
     return zones[-10:] if len(zones) > 10 else zones
 
 def detect_liquidity_sweep(df, zone):
