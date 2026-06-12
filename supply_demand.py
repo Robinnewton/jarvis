@@ -116,11 +116,12 @@ def price_near_fib(price, fib_level, tolerance_pct=0.004):
     tolerance = abs(fib_level) * tolerance_pct
     return abs(price - fib_level) <= tolerance
 
-def analyze_timeframe(df, current_price):
+def analyze_timeframe(df, current_price, timeframe='H1'):
     if df is None or len(df) < 20:
         return None
     result = {'zones':[],'fibs':None,'trend':'neutral','price_in_zone':False,'price_at_fib':False,'zone_type':None,'score':0,'sweep_detected':False,'sweep_info':None}
-    zones = detect_zones(df)
+    lookback = {'D1': 60, 'H4': 60, 'H1': 30}.get(timeframe, 30)
+    zones = detect_zones(df, avg_body_lookback=lookback)
     result['zones'] = zones
     swing_highs, swing_lows = find_swing_points(df)
     if swing_highs and swing_lows:
@@ -243,9 +244,9 @@ def analyze_pair(symbol, config):
     result['current_price'] = current_price
 
     print(f"    Detecting zones & sweeps...")
-    d1_analysis = analyze_timeframe(df_d1, current_price)
-    h4_analysis = analyze_timeframe(df_h4, current_price)
-    h1_analysis = analyze_timeframe(df_h1, current_price)
+    d1_analysis = analyze_timeframe(df_d1, current_price, 'D1')
+    h4_analysis = analyze_timeframe(df_h4, current_price, 'H4')
+    h1_analysis = analyze_timeframe(df_h1, current_price, 'H1')
     result['timeframes'] = {'D1':d1_analysis,'H4':h4_analysis,'H1':h1_analysis}
     result['sweep'] = any(tf and tf.get('sweep_detected') for tf in [d1_analysis,h4_analysis,h1_analysis])
 
