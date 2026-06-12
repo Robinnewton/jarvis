@@ -111,7 +111,20 @@ def detect_zones(df, avg_body_lookback=20):
                     'retests': retests,
                     'index': i
                 })
-    return zones[-10:] if len(zones) > 10 else zones
+    # Remove invalidated zones — price closed fully through them
+    valid_zones = []
+    for zone in zones:
+        zone_broken = False
+        for j in range(zone['index'] + 1, len(df)):
+            if zone['type'] == 'demand' and closes[j] < zone['low']:
+                zone_broken = True
+                break
+            if zone['type'] == 'supply' and closes[j] > zone['high']:
+                zone_broken = True
+                break
+        if not zone_broken:
+            valid_zones.append(zone)
+    return valid_zones[-10:] if len(valid_zones) > 10 else valid_zones
 
 def detect_liquidity_sweep(df, zone):
     if df is None or len(df) < 5:
