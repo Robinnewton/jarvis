@@ -199,18 +199,25 @@ def analyze_timeframe(df, current_price, timeframe='H1'):
 def calculate_confluence_score(d1, h4, h1):
     score   = 0
     reasons = []
+    strength_multiplier = {'strong': 1.0, 'medium': 0.75, 'weak': 0.5}
     if d1 and d1.get('price_in_zone'):
-        score += 25
-        reasons.append(f"D1 {d1['zone_type']} zone")
+        d1_strength = d1.get('active_zone', {}).get('strength', 'weak')
+        d1_points = round(25 * strength_multiplier.get(d1_strength, 0.5))
+        score += d1_points
+        reasons.append(f"D1 {d1['zone_type']} zone ({d1_strength})")
     if h4 and h4.get('price_in_zone'):
-        score += 20
-        reasons.append(f"H4 {h4['zone_type']} zone")
+        h4_strength = h4.get('active_zone', {}).get('strength', 'weak')
+        h4_points = round(20 * strength_multiplier.get(h4_strength, 0.5))
+        score += h4_points
+        reasons.append(f"H4 {h4['zone_type']} zone ({h4_strength})")
         if d1 and d1.get('zone_type') == h4.get('zone_type'):
             score += 10
             reasons.append("D1-H4 alignment")
     if h1 and h1.get('price_in_zone'):
-        score += 15
-        reasons.append(f"H1 {h1['zone_type']} zone")
+        h1_strength = h1.get('active_zone', {}).get('strength', 'weak')
+        h1_points = round(15 * strength_multiplier.get(h1_strength, 0.5))
+        score += h1_points
+        reasons.append(f"H1 {h1['zone_type']} zone ({h1_strength})")
         if h4 and h4.get('zone_type') == h1.get('zone_type'):
             score += 5
             reasons.append("H4-H1 alignment")
