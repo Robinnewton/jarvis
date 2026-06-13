@@ -86,6 +86,19 @@ def is_in_cooldown(symbol, new_action):
         return True
     return False
 
+def is_trading_session():
+    """Only trade during London and New York sessions (UTC times), weekdays only"""
+    now_utc = datetime.utcnow()
+    hour = now_utc.hour
+    weekday = now_utc.weekday()  # 0=Monday, 6=Sunday
+    # Block weekends — Saturday and Sunday
+    if weekday >= 5:
+        return False
+    # London: 07:00 - 16:00 UTC
+    # New York: 12:00 - 21:00 UTC
+    # Combined window: 07:00 - 21:00 UTC
+    return 7 <= hour < 21
+
 def save_signals(signals):
     with open(SIGNALS_FILE, 'w') as f:
         json.dump(signals, f, indent=2, default=str)
@@ -117,6 +130,19 @@ def run_scan(config):
 
     all_signals = []
     actionable = []
+
+    # Session filter
+    if not is_trading_session():
+        from datetime import datetime as dt
+        hour = dt.utcnow().hour
+        from datetime import datetime as dt
+        weekday = dt.utcnow().weekday()
+        if weekday >= 5:
+            print(f"\n  Markets closed — weekend. Trading resumes Monday 07:00 UTC.")
+        else:
+            print(f"\n  Outside trading sessions (UTC hour: {hour}). London opens at 07:00 UTC.")
+        speak("Markets are outside active sessions.", config)
+        return []
 
     for i, pair in enumerate(pairs):
         print(f"\n[{i+1}/{len(pairs)}] Analyzing {pair}...")

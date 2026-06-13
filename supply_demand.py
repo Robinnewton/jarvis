@@ -270,13 +270,27 @@ def determine_action(score, d1, h4, h1, config):
         return 'SELL', 'supply'
     return 'WAIT', None
 
-def calculate_levels(action, current_price, atr):
+def calculate_levels(action, current_price, atr, min_rr=2.0):
     if atr is None or atr == 0:
         atr = current_price * 0.005
     if action == 'BUY':
-        return current_price, current_price - (atr * 1.5), current_price + (atr * 4.5)
+        entry = current_price
+        sl    = current_price - (atr * 1.5)
+        tp    = current_price + (atr * 4.5)
+        risk    = entry - sl
+        reward  = tp - entry
+        if risk <= 0 or (reward / risk) < min_rr:
+            return None, None, None
+        return entry, sl, tp
     elif action == 'SELL':
-        return current_price, current_price + (atr * 1.5), current_price - (atr * 4.5)
+        entry = current_price
+        sl    = current_price + (atr * 1.5)
+        tp    = current_price - (atr * 4.5)
+        risk    = sl - entry
+        reward  = entry - tp
+        if risk <= 0 or (reward / risk) < min_rr:
+            return None, None, None
+        return entry, sl, tp
     return None, None, None
 
 def analyze_pair(symbol, config):
