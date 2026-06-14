@@ -27,6 +27,18 @@ def calculate_fibonacci(swing_high, swing_low, direction):
         fib_786 = swing_low + (diff * 0.786)
     return {'fib_618': fib_618, 'fib_786': fib_786}
 
+def get_strength_thresholds(df):
+    """Dynamic thresholds based on pair volatility"""
+    avg_range = (df['High'] - df['Low']).mean()
+    avg_close = df['Close'].mean()
+    volatility = (avg_range / avg_close) * 100  # volatility as % of price
+    if volatility > 0.5:      # High volatility (XAU/USD, GBP/USD)
+        return 3.0, 1.5
+    elif volatility > 0.2:    # Medium volatility (USD/JPY, AUD/USD)
+        return 2.0, 1.0
+    else:                      # Low volatility (EUR/GBP, USD/CAD)
+        return 1.5, 0.75
+
 def detect_zones(df, avg_body_lookback=20):
     if df is None or len(df) < 20:
         return []
@@ -61,19 +73,32 @@ def detect_zones(df, avg_body_lookback=20):
         curr_is_bullish      = _is_bullish_candle(i) and _is_large_body(i, avg_body_current_window)
 
         if prev_prev_is_bearish and prev_is_small_body and curr_is_bullish:
+            if not _age_filter(i, len(df), avg_body_lookback):
+                continue
+            if True:
                 zone_high = max(highs[i-1], highs[i-2])
                 zone_low  = min(lows[i-1], lows[i-2])
                 # Measure how far price moved away from zone
                 move_away = abs(closes[i] - zone_high) / avg_body_current_window if avg_body_current_window > 0 else 0
-                # Count retests — how many candles after zone touched it without breaking
-                retests = sum(1 for j in range(i+1, len(df)) if lows[j] <= zone_high and closes[j] >= zone_low)
+                # Count meaningful retests — candle touched zone AND closed back above it (held)
+                retests = 0
+                for j in range(i+1, len(df)):
+                    touched = lows[j] <= zone_high
+                    held    = closes[j] >= zone_low
+                    reversed_up = closes[j] > opens[j]  # bullish close = zone held
+                    if touched and held and reversed_up:
+                        retests += 1
+                # Dynamic thresholds based on pair volatility
+                strong_thresh, medium_thresh = get_strength_thresholds(df)
                 # Assign strength
-                if move_away >= 3 and retests == 0:
-                    strength = 'strong'
-                elif move_away >= 1.5 or retests <= 2:
-                    strength = 'medium'
+                if move_away >= strong_thresh and 1 <= retests <= 3:
+                    strength = 'strong'  # Big move + held on meaningful retest
+                elif move_away >= strong_thresh and retests == 0:
+                    strength = 'strong'  # Big move, fresh untested zone
+                elif move_away >= medium_thresh and retests <= 2:
+                    strength = 'medium'  # Moderate move
                 else:
-                    strength = 'weak'
+                    strength = 'weak'    # Small move or too many retests
                 zones.append({
                     'type': 'demand',
                     'high': zone_high,
@@ -89,19 +114,32 @@ def detect_zones(df, avg_body_lookback=20):
         curr_is_bearish      = _is_bearish_candle(i) and _is_large_body(i, avg_body_current_window)
 
         if prev_prev_is_bullish and prev_is_small_body and curr_is_bearish:
+            if not _age_filter(i, len(df), avg_body_lookback):
+                continue
+            if True:
                 zone_high = max(highs[i-1], highs[i-2])
                 zone_low  = min(lows[i-1], lows[i-2])
                 # Measure how far price moved away from zone
                 move_away = abs(closes[i] - zone_low) / avg_body_current_window if avg_body_current_window > 0 else 0
-                # Count retests — how many candles after zone touched it without breaking
-                retests = sum(1 for j in range(i+1, len(df)) if highs[j] >= zone_low and closes[j] <= zone_high)
+                # Count meaningful retests — candle touched zone AND closed back below it (held)
+                retests = 0
+                for j in range(i+1, len(df)):
+                    touched = highs[j] >= zone_low
+                    held    = closes[j] <= zone_high
+                    reversed_down = closes[j] < opens[j]  # bearish close = zone held
+                    if touched and held and reversed_down:
+                        retests += 1
+                # Dynamic thresholds based on pair volatility
+                strong_thresh, medium_thresh = get_strength_thresholds(df)
                 # Assign strength
-                if move_away >= 3 and retests == 0:
-                    strength = 'strong'
-                elif move_away >= 1.5 or retests <= 2:
-                    strength = 'medium'
+                if move_away >= strong_thresh and 1 <= retests <= 3:
+                    strength = 'strong'  # Big move + held on meaningful retest
+                elif move_away >= strong_thresh and retests == 0:
+                    strength = 'strong'  # Big move, fresh untested zone
+                elif move_away >= medium_thresh and retests <= 2:
+                    strength = 'medium'  # Moderate move
                 else:
-                    strength = 'weak'
+                    strength = 'weak'    # Small move or too many retests
                 zones.append({
                     'type': 'supply',
                     'high': zone_high,
@@ -125,6 +163,11 @@ def detect_zones(df, avg_body_lookback=20):
         if not zone_broken:
             valid_zones.append(zone)
     return valid_zones[-10:] if len(valid_zones) > 10 else valid_zones
+
+def _age_filter(i, df_len, lookback):
+    """Dynamic age filter — use last 40% of available data"""
+    cutoff = max(3, int(df_len * 0.6))
+    return i >= cutoff
 
 def detect_liquidity_sweep(df, zone):
     if df is None or len(df) < 5:
@@ -234,10 +277,25 @@ def calculate_confluence_score(d1, h4, h1):
         if h4 and h4.get('zone_type') == h1.get('zone_type'):
             score += 5
             reasons.append("H4-H1 alignment")
-    for tf, name in [(d1,'D1'),(h4,'H4'),(h1,'H1')]:
-        if tf and tf.get('price_at_fib'):
-            score += 15
-            reasons.append(f"{name} at {tf.get('fib_level','fib')}")
+    # Fibonacci confluence — higher timeframes weighted more
+    fib_hits = [(tf, name) for tf, name in [(d1,'D1'),(h4,'H4'),(h1,'H1')] if tf and tf.get('price_at_fib')]
+    fib_names = [name for _, name in fib_hits]
+    if 'D1' in fib_names and 'H4' in fib_names:
+        # Strong confluence — both higher timeframes agree
+        score += 20
+        reasons.append(f"D1+H4 Fib confluence ({d1.get('fib_level','fib')})")
+        if 'H1' in fib_names:
+            score += 5
+            reasons.append(f"H1 Fib confirmation ({h1.get('fib_level','fib')})")
+    elif 'D1' in fib_names:
+        score += 12
+        reasons.append(f"D1 Fib ({d1.get('fib_level','fib')})")
+    elif 'H4' in fib_names:
+        score += 8
+        reasons.append(f"H4 Fib ({h4.get('fib_level','fib')})")
+    elif 'H1' in fib_names:
+        score += 3
+        reasons.append(f"H1 Fib only ({h1.get('fib_level','fib')}) — weak")
     trends = [tf['trend'] for tf in [d1,h4,h1] if tf and tf.get('trend') != 'neutral']
     if len(trends) >= 2 and len(set(trends)) == 1:
         score += 10

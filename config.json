@@ -25,11 +25,11 @@
   "timeframes": {
     "D1": {
       "interval": "1day",
-      "outputsize": 60
+      "outputsize": 120
     },
     "H4": {
       "interval": "4h",
-      "outputsize": 90
+      "outputsize": 180
     },
     "H1": {
       "interval": "1h",

@@ -131,6 +131,13 @@ def run_scan(config):
     all_signals = []
     actionable = []
 
+    # Correlation groups — only one signal per group allowed
+    correlation_groups = [
+        ['EUR/GBP', 'GBP/USD'],  # GBP pairs
+        ['AUD/USD', 'USD/CAD'],  # Commodity currencies
+    ]
+    triggered_groups = set()
+
     # Session filter
     if not is_trading_session():
         from datetime import datetime as dt
@@ -151,6 +158,19 @@ def run_scan(config):
             all_signals.append(result)
 
             if result['action'] != 'WAIT' and result['score'] >= min_score:
+                # Correlation filter
+                pair_group = None
+                for idx, group in enumerate(correlation_groups):
+                    if pair in group:
+                        pair_group = idx
+                        break
+                if pair_group is not None and pair_group in triggered_groups:
+                    print(f"    Score: {result['score']}% - Signal blocked by correlation filter")
+                    result['action'] = 'WAIT'
+                    continue
+                if pair_group is not None:
+                    triggered_groups.add(pair_group)
+
                 if is_in_cooldown(pair, result['action']):
                     print(f"    Score: {result['score']}% - Signal blocked by cooldown")
                     result['action'] = 'WAIT'
