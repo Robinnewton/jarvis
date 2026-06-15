@@ -27,18 +27,6 @@ def calculate_fibonacci(swing_high, swing_low, direction):
         fib_786 = swing_low + (diff * 0.786)
     return {'fib_618': fib_618, 'fib_786': fib_786}
 
-def get_strength_thresholds(df):
-    """Dynamic thresholds based on pair volatility"""
-    avg_range = (df['High'] - df['Low']).mean()
-    avg_close = df['Close'].mean()
-    volatility = (avg_range / avg_close) * 100  # volatility as % of price
-    if volatility > 0.5:      # High volatility (XAU/USD, GBP/USD)
-        return 3.0, 1.5
-    elif volatility > 0.2:    # Medium volatility (USD/JPY, AUD/USD)
-        return 2.0, 1.0
-    else:                      # Low volatility (EUR/GBP, USD/CAD)
-        return 1.5, 0.75
-
 def detect_zones(df, avg_body_lookback=20):
     if df is None or len(df) < 20:
         return []
@@ -59,10 +47,9 @@ def detect_zones(df, avg_body_lookback=20):
     def _is_large_body(idx, avg_body_val):
         return abs(closes[idx] - opens[idx]) > avg_body_val * 1.2
 
-    for i in range(3, len(df) - 1):
+    for i in range(max(2, avg_body_lookback), len(df) - 1):
         # Calculate average body size over a fixed lookback window
-        lookback_start = max(0, i - avg_body_lookback)
-        avg_body_current_window = np.mean(np.abs(closes[lookback_start : i] - opens[lookback_start : i]))
+        avg_body_current_window = np.mean(np.abs(closes[i - avg_body_lookback : i] - opens[i - avg_body_lookback : i]))
 
         if avg_body_current_window == 0:
             continue
@@ -73,101 +60,27 @@ def detect_zones(df, avg_body_lookback=20):
         curr_is_bullish      = _is_bullish_candle(i) and _is_large_body(i, avg_body_current_window)
 
         if prev_prev_is_bearish and prev_is_small_body and curr_is_bullish:
-            if not _age_filter(i, len(df), avg_body_lookback):
-                continue
-            if True:
-                zone_high = max(highs[i-1], highs[i-2])
-                zone_low  = min(lows[i-1], lows[i-2])
-                # Measure how far price moved away from zone
-                move_away = abs(closes[i] - zone_high) / avg_body_current_window if avg_body_current_window > 0 else 0
-                # Count meaningful retests — candle touched zone AND closed back above it (held)
-                retests = 0
-                for j in range(i+1, len(df)):
-                    touched = lows[j] <= zone_high
-                    held    = closes[j] >= zone_low
-                    reversed_up = closes[j] > opens[j]  # bullish close = zone held
-                    if touched and held and reversed_up:
-                        retests += 1
-                # Dynamic thresholds based on pair volatility
-                strong_thresh, medium_thresh = get_strength_thresholds(df)
-                # Assign strength
-                if move_away >= strong_thresh and 1 <= retests <= 3:
-                    strength = 'strong'  # Big move + held on meaningful retest
-                elif move_away >= strong_thresh and retests == 0:
-                    strength = 'strong'  # Big move, fresh untested zone
-                elif move_away >= medium_thresh and retests <= 2:
-                    strength = 'medium'  # Moderate move
-                else:
-                    strength = 'weak'    # Small move or too many retests
-                zones.append({
-                    'type': 'demand',
-                    'high': zone_high,
-                    'low': zone_low,
-                    'strength': strength,
-                    'move_away': round(move_away, 2),
-                    'retests': retests,
-                    'index': i
-                })
+            zones.append({
+                'type': 'demand',
+                'high': max(highs[i-1], highs[i-2]),
+                'low': min(lows[i-1], lows[i-2]),
+                'strength': 'strong',
+                'index': i
+            })
 
         # Conditions for Supply Zone (Bullish -> Small Body Base -> Bearish)
         prev_prev_is_bullish = _is_bullish_candle(i-2)
         curr_is_bearish      = _is_bearish_candle(i) and _is_large_body(i, avg_body_current_window)
 
         if prev_prev_is_bullish and prev_is_small_body and curr_is_bearish:
-            if not _age_filter(i, len(df), avg_body_lookback):
-                continue
-            if True:
-                zone_high = max(highs[i-1], highs[i-2])
-                zone_low  = min(lows[i-1], lows[i-2])
-                # Measure how far price moved away from zone
-                move_away = abs(closes[i] - zone_low) / avg_body_current_window if avg_body_current_window > 0 else 0
-                # Count meaningful retests — candle touched zone AND closed back below it (held)
-                retests = 0
-                for j in range(i+1, len(df)):
-                    touched = highs[j] >= zone_low
-                    held    = closes[j] <= zone_high
-                    reversed_down = closes[j] < opens[j]  # bearish close = zone held
-                    if touched and held and reversed_down:
-                        retests += 1
-                # Dynamic thresholds based on pair volatility
-                strong_thresh, medium_thresh = get_strength_thresholds(df)
-                # Assign strength
-                if move_away >= strong_thresh and 1 <= retests <= 3:
-                    strength = 'strong'  # Big move + held on meaningful retest
-                elif move_away >= strong_thresh and retests == 0:
-                    strength = 'strong'  # Big move, fresh untested zone
-                elif move_away >= medium_thresh and retests <= 2:
-                    strength = 'medium'  # Moderate move
-                else:
-                    strength = 'weak'    # Small move or too many retests
-                zones.append({
-                    'type': 'supply',
-                    'high': zone_high,
-                    'low': zone_low,
-                    'strength': strength,
-                    'move_away': round(move_away, 2),
-                    'retests': retests,
-                    'index': i
-                })
-    # Remove invalidated zones — price closed fully through them
-    valid_zones = []
-    for zone in zones:
-        zone_broken = False
-        for j in range(zone['index'] + 1, len(df)):
-            if zone['type'] == 'demand' and closes[j] < zone['low']:
-                zone_broken = True
-                break
-            if zone['type'] == 'supply' and closes[j] > zone['high']:
-                zone_broken = True
-                break
-        if not zone_broken:
-            valid_zones.append(zone)
-    return valid_zones[-10:] if len(valid_zones) > 10 else valid_zones
-
-def _age_filter(i, df_len, lookback):
-    """Dynamic age filter — use last 40% of available data"""
-    cutoff = max(3, int(df_len * 0.6))
-    return i >= cutoff
+            zones.append({
+                'type': 'supply',
+                'high': max(highs[i-1], highs[i-2]),
+                'low': min(lows[i-1], lows[i-2]),
+                'strength': 'strong',
+                'index': i
+            })
+    return zones[-10:] if len(zones) > 10 else zones
 
 def detect_liquidity_sweep(df, zone):
     if df is None or len(df) < 5:
@@ -203,12 +116,11 @@ def price_near_fib(price, fib_level, tolerance_pct=0.004):
     tolerance = abs(fib_level) * tolerance_pct
     return abs(price - fib_level) <= tolerance
 
-def analyze_timeframe(df, current_price, timeframe='H1'):
+def analyze_timeframe(df, current_price):
     if df is None or len(df) < 20:
         return None
     result = {'zones':[],'fibs':None,'trend':'neutral','price_in_zone':False,'price_at_fib':False,'zone_type':None,'score':0,'sweep_detected':False,'sweep_info':None}
-    lookback = {'D1': 60, 'H4': 60, 'H1': 30}.get(timeframe, 30)
-    zones = detect_zones(df, avg_body_lookback=lookback)
+    zones = detect_zones(df)
     result['zones'] = zones
     swing_highs, swing_lows = find_swing_points(df)
     if swing_highs and swing_lows:
@@ -255,47 +167,25 @@ def analyze_timeframe(df, current_price, timeframe='H1'):
 def calculate_confluence_score(d1, h4, h1):
     score   = 0
     reasons = []
-    strength_multiplier = {'strong': 1.0, 'medium': 0.75, 'weak': 0.5}
     if d1 and d1.get('price_in_zone'):
-        d1_strength = d1.get('active_zone', {}).get('strength', 'weak')
-        d1_points = round(25 * strength_multiplier.get(d1_strength, 0.5))
-        score += d1_points
-        reasons.append(f"D1 {d1['zone_type']} zone ({d1_strength})")
+        score += 25
+        reasons.append(f"D1 {d1['zone_type']} zone")
     if h4 and h4.get('price_in_zone'):
-        h4_strength = h4.get('active_zone', {}).get('strength', 'weak')
-        h4_points = round(20 * strength_multiplier.get(h4_strength, 0.5))
-        score += h4_points
-        reasons.append(f"H4 {h4['zone_type']} zone ({h4_strength})")
+        score += 20
+        reasons.append(f"H4 {h4['zone_type']} zone")
         if d1 and d1.get('zone_type') == h4.get('zone_type'):
             score += 10
             reasons.append("D1-H4 alignment")
     if h1 and h1.get('price_in_zone'):
-        h1_strength = h1.get('active_zone', {}).get('strength', 'weak')
-        h1_points = round(15 * strength_multiplier.get(h1_strength, 0.5))
-        score += h1_points
-        reasons.append(f"H1 {h1['zone_type']} zone ({h1_strength})")
+        score += 15
+        reasons.append(f"H1 {h1['zone_type']} zone")
         if h4 and h4.get('zone_type') == h1.get('zone_type'):
             score += 5
             reasons.append("H4-H1 alignment")
-    # Fibonacci confluence — higher timeframes weighted more
-    fib_hits = [(tf, name) for tf, name in [(d1,'D1'),(h4,'H4'),(h1,'H1')] if tf and tf.get('price_at_fib')]
-    fib_names = [name for _, name in fib_hits]
-    if 'D1' in fib_names and 'H4' in fib_names:
-        # Strong confluence — both higher timeframes agree
-        score += 20
-        reasons.append(f"D1+H4 Fib confluence ({d1.get('fib_level','fib')})")
-        if 'H1' in fib_names:
-            score += 5
-            reasons.append(f"H1 Fib confirmation ({h1.get('fib_level','fib')})")
-    elif 'D1' in fib_names:
-        score += 12
-        reasons.append(f"D1 Fib ({d1.get('fib_level','fib')})")
-    elif 'H4' in fib_names:
-        score += 8
-        reasons.append(f"H4 Fib ({h4.get('fib_level','fib')})")
-    elif 'H1' in fib_names:
-        score += 3
-        reasons.append(f"H1 Fib only ({h1.get('fib_level','fib')}) — weak")
+    for tf, name in [(d1,'D1'),(h4,'H4'),(h1,'H1')]:
+        if tf and tf.get('price_at_fib'):
+            score += 15
+            reasons.append(f"{name} at {tf.get('fib_level','fib')}")
     trends = [tf['trend'] for tf in [d1,h4,h1] if tf and tf.get('trend') != 'neutral']
     if len(trends) >= 2 and len(set(trends)) == 1:
         score += 10
@@ -328,27 +218,13 @@ def determine_action(score, d1, h4, h1, config):
         return 'SELL', 'supply'
     return 'WAIT', None
 
-def calculate_levels(action, current_price, atr, min_rr=2.0):
+def calculate_levels(action, current_price, atr):
     if atr is None or atr == 0:
         atr = current_price * 0.005
     if action == 'BUY':
-        entry = current_price
-        sl    = current_price - (atr * 1.5)
-        tp    = current_price + (atr * 4.5)
-        risk    = entry - sl
-        reward  = tp - entry
-        if risk <= 0 or (reward / risk) < min_rr:
-            return None, None, None
-        return entry, sl, tp
+        return current_price, current_price - (atr * 1.5), current_price + (atr * 4.5)
     elif action == 'SELL':
-        entry = current_price
-        sl    = current_price + (atr * 1.5)
-        tp    = current_price - (atr * 4.5)
-        risk    = sl - entry
-        reward  = entry - tp
-        if risk <= 0 or (reward / risk) < min_rr:
-            return None, None, None
-        return entry, sl, tp
+        return current_price, current_price + (atr * 1.5), current_price - (atr * 4.5)
     return None, None, None
 
 def analyze_pair(symbol, config):
@@ -367,9 +243,9 @@ def analyze_pair(symbol, config):
     result['current_price'] = current_price
 
     print(f"    Detecting zones & sweeps...")
-    d1_analysis = analyze_timeframe(df_d1, current_price, 'D1')
-    h4_analysis = analyze_timeframe(df_h4, current_price, 'H4')
-    h1_analysis = analyze_timeframe(df_h1, current_price, 'H1')
+    d1_analysis = analyze_timeframe(df_d1, current_price)
+    h4_analysis = analyze_timeframe(df_h4, current_price)
+    h1_analysis = analyze_timeframe(df_h1, current_price)
     result['timeframes'] = {'D1':d1_analysis,'H4':h4_analysis,'H1':h1_analysis}
     result['sweep'] = any(tf and tf.get('sweep_detected') for tf in [d1_analysis,h4_analysis,h1_analysis])
 
