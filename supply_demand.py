@@ -218,14 +218,52 @@ def determine_action(score, d1, h4, h1, config):
         return 'SELL', 'supply'
     return 'WAIT', None
 
-def calculate_levels(action, current_price, atr):
+def calculate_levels(action, current_price, atr, df_h4=None, df_d1=None):
     if atr is None or atr == 0:
         atr = current_price * 0.005
+    sl = None
+    tp = None
     if action == 'BUY':
-        return current_price, current_price - (atr * 1.5), current_price + (atr * 4.5)
+        sl = current_price - (atr * 1.5)
+        # Target nearest swing high above current price
+        tp = None
+        for df in [df_h4, df_d1]:
+            if df is not None:
+                swing_highs, _ = find_swing_points(df)
+                # Find nearest swing high above current price
+                targets = [h for _, h in swing_highs if h > current_price * 1.001]
+                if targets:
+                    tp = min(targets)  # nearest swing high
+                    break
+        # Fallback to ATR if no swing high found
+        if tp is None:
+            tp = current_price + (atr * 2.5)
     elif action == 'SELL':
-        return current_price, current_price + (atr * 1.5), current_price - (atr * 4.5)
-    return None, None, None
+        sl = current_price + (atr * 1.5)
+        # Target nearest swing low below current price
+        tp = None
+        for df in [df_h4, df_d1]:
+            if df is not None:
+                _, swing_lows = find_swing_points(df)
+                # Find nearest swing low below current price
+                targets = [l for _, l in swing_lows if l < current_price * 0.999]
+                if targets:
+                    tp = max(targets)  # nearest swing low
+                    break
+        # Fallback to ATR if no swing low found
+        if tp is None:
+            tp = current_price - (atr * 2.5)
+    # Validate minimum RR of 1:2
+    if sl and tp:
+        risk = abs(current_price - sl)
+        reward = abs(tp - current_price)
+        if risk > 0 and reward / risk < 2.0:
+            # Extend to next swing point or ATR fallback
+            if action == 'BUY':
+                tp = current_price + (atr * 2.5)
+            elif action == 'SELL':
+                tp = current_price - (atr * 2.5)
+    return current_price, sl, tp
 
 def analyze_pair(symbol, config):
     result = {'symbol':symbol,'timestamp':datetime.now().isoformat(),'action':'WAIT','score':0,'zone_type':None,'reasons':[],'entry':None,'stop_loss':None,'take_profit':None,'sweep':False,'timeframes':{}}
@@ -267,7 +305,7 @@ def analyze_pair(symbol, config):
                 df_h4['Close'].values.astype(float),
                 timeperiod=14
             )[-1]
-        entry, sl, tp = calculate_levels(action, current_price, atr)
+        entry, sl, tp = calculate_levels(action, current_price, atr, df_h4, df_d1)
         result['entry']       = entry
         result['stop_loss']   = sl
         result['take_profit'] = tp

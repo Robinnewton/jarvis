@@ -94,10 +94,11 @@ def is_trading_session():
     # Block weekends — Saturday and Sunday
     if weekday >= 5:
         return False
-    # London: 07:00 - 16:00 UTC
-    # New York: 12:00 - 21:00 UTC
-    # Combined window: 07:00 - 21:00 UTC
-    return 7 <= hour < 21
+    # Block Friday close — spreads widen, weekend gap risk
+    if weekday == 4 and hour >= 20:
+        return False
+    # All other weekday hours are valid for swing trading
+    return True
 
 def save_signals(signals):
     with open(SIGNALS_FILE, 'w') as f:

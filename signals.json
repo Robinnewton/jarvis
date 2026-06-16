@@ -1,51 +1,159 @@
 {
-  "timestamp": "2026-06-12T11:57:36.630154",
+  "timestamp": "2026-06-15T13:56:05.652147",
   "account_size": 5000,
   "risk_percent": 1,
   "total_pairs": 6,
-  "actionable_count": 2,
+  "actionable_count": 3,
   "signals": [
     {
       "symbol": "XAU/USD",
-      "timestamp": "2026-06-12T11:57:36.197668",
+      "timestamp": "2026-06-15T13:56:05.123334",
       "action": "WAIT",
-      "score": 0,
+      "score": 30,
       "zone_type": null,
-      "reasons": [],
+      "reasons": [
+        "D1 demand zone",
+        "D1 liquidity sweep \u2713"
+      ],
       "entry": null,
       "stop_loss": null,
       "take_profit": null,
-      "sweep": false,
+      "sweep": true,
       "timeframes": {
         "D1": {
-          "zones": [],
+          "zones": [
+            {
+              "type": "supply",
+              "high": 5237.80436,
+              "low": 5122.45155,
+              "strength": "strong",
+              "index": 24
+            },
+            {
+              "type": "demand",
+              "high": 4532.22948,
+              "low": 4104.81533,
+              "strength": "strong",
+              "index": 37
+            },
+            {
+              "type": "demand",
+              "high": 4579.18712,
+              "low": 4420.32741,
+              "strength": "strong",
+              "index": 43
+            },
+            {
+              "type": "supply",
+              "high": 4837.40174,
+              "low": 4740.74681,
+              "strength": "strong",
+              "index": 64
+            },
+            {
+              "type": "demand",
+              "high": 4509.37951,
+              "low": 4504.3859,
+              "strength": "strong",
+              "index": 98
+            },
+            {
+              "type": "supply",
+              "high": 4542.85519,
+              "low": 4538.64658,
+              "strength": "strong",
+              "index": 105
+            },
+            {
+              "type": "supply",
+              "high": 4352.93606,
+              "low": 4268.19299,
+              "strength": "strong",
+              "index": 113
+            }
+          ],
           "fibs": {
             "fib_618": 4507.76270872,
             "fib_786": 4545.97565944
           },
           "trend": "bearish",
-          "price_in_zone": false,
+          "price_in_zone": true,
           "price_at_fib": false,
-          "zone_type": null,
+          "zone_type": "demand",
           "score": 0,
-          "sweep_detected": false,
-          "sweep_info": null
+          "sweep_detected": true,
+          "sweep_info": {
+            "type": "demand_sweep",
+            "swept_to": 4023.49722,
+            "closed_at": 4211.07514,
+            "confirmed_at": 4217.96336,
+            "label": "Liquidity sweep below demand \u2014 confirmed"
+          },
+          "active_zone": {
+            "type": "demand",
+            "high": 4532.22948,
+            "low": 4104.81533,
+            "strength": "strong",
+            "index": 37
+          }
         },
         "H4": {
           "zones": [
             {
               "type": "demand",
+              "high": 4506.12833,
+              "low": 4505.60175,
+              "strength": "strong",
+              "index": 50
+            },
+            {
+              "type": "supply",
+              "high": 4577.5753,
+              "low": 4560.4305,
+              "strength": "strong",
+              "index": 56
+            },
+            {
+              "type": "supply",
+              "high": 4466.27959,
+              "low": 4442.27267,
+              "strength": "strong",
+              "index": 69
+            },
+            {
+              "type": "supply",
+              "high": 4547.2852,
+              "low": 4516.71183,
+              "strength": "strong",
+              "index": 93
+            },
+            {
+              "type": "demand",
+              "high": 4331.8172,
+              "low": 4329.00433,
+              "strength": "strong",
+              "index": 134
+            },
+            {
+              "type": "demand",
               "high": 4106.10167,
               "low": 4053.79247,
               "strength": "strong",
-              "index": 86
+              "index": 157
+            },
+            {
+              "type": "demand",
+              "high": 4245.20292,
+              "low": 4172.05557,
+              "strength": "strong",
+              "index": 160
             }
           ],
           "fibs": {
-            "fib_618": 4152.02529144,
-            "fib_786": 4095.49985688
+            "fib_618": 4108.1887974,
+            "fib_786": 4070.9422398
           },
-          "trend": "bearish",
+          "trend": "bullish",
           "price_in_zone": false,
           "price_at_fib": false,
           "zone_type": null,
@@ -57,22 +165,15 @@
           "zones": [
             {
               "type": "demand",
-              "high": 4077.67328,
-              "low": 4023.49722,
-              "strength": "strong",
-              "index": 39
-            },
-            {
-              "type": "supply",
-              "high": 4204.67584,
-              "low": 4189.81239,
+              "high": 4333.50667,
+              "low": 4299.29446,
               "strength": "strong",
               "index": 68
             }
           ],
           "fibs": {
-            "fib_618": 4126.9112619,
-            "fib_786": 4094.7543063
+            "fib_618": 4260.01563232,
+            "fib_786": 4239.42273664
           },
           "trend": "bullish",
           "price_in_zone": false,
@@ -83,160 +184,220 @@
           "sweep_info": null
         }
       },
-      "current_price": 4218.11547
+      "current_price": 4340.82724
     },
     {
       "symbol": "EUR/GBP",
-      "timestamp": "2026-06-12T11:57:36.302300",
+      "timestamp": "2026-06-15T13:56:05.223392",
       "action": "BUY",
-      "score": 85,
+      "score": 90,
       "zone_type": "demand",
       "reasons": [
-        "H4 demand zone",
-        "H1 demand zone",
-        "H4-H1 alignment",
+        "D1 demand zone",
+        "H4 supply zone",
         "D1 at 61.8%",
         "H4 at 61.8%",
         "H1 at 61.8%"
       ],
-      "entry": 0.86303,
-      "stop_loss": 0.8614125943735418,
-      "take_profit": 0.8678822168793744,
+      "entry": 0.86468,
+      "stop_loss": 0.8628369237493375,
+      "take_profit": 0.8702092287519876,
       "sweep": false,
       "timeframes": {
         "D1": {
-          "zones": [],
+          "zones": [
+            {
+              "type": "supply",
+              "high": 0.86886,
+              "low": 0.8648,
+              "strength": "strong",
+              "index": 21
+            },
+            {
+              "type": "demand",
+              "high": 0.86697,
+              "low": 0.86354,
+              "strength": "strong",
+              "index": 39
+            },
+            {
+              "type": "supply",
+              "high": 0.86779,
+              "low": 0.86537,
+              "strength": "strong",
+              "index": 73
+            },
+            {
+              "type": "demand",
+              "high": 0.86563,
+              "low": 0.86304,
+              "strength": "strong",
+              "index": 83
+            },
+            {
+              "type": "supply",
+              "high": 0.86567,
+              "low": 0.86316,
+              "strength": "strong",
+              "index": 109
+            },
+            {
+              "type": "demand",
+              "high": 0.86491,
+              "low": 0.86159,
+              "strength": "strong",
+              "index": 112
+            }
+          ],
           "fibs": {
             "fib_618": 0.86565026,
             "fib_786": 0.86675402
           },
           "trend": "bearish",
-          "price_in_zone": false,
+          "price_in_zone": true,
           "price_at_fib": true,
-          "zone_type": null,
+          "zone_type": "demand",
           "score": 0,
           "sweep_detected": false,
           "sweep_info": null,
+          "active_zone": {
+            "type": "demand",
+            "high": 0.86697,
+            "low": 0.86354,
+            "strength": "strong",
+            "index": 39
+          },
           "fib_level": "61.8%"
         },
         "H4": {
           "zones": [
             {
+              "type": "demand",
+              "high": 0.86409,
+              "low": 0.86301,
+              "strength": "strong",
+              "index": 47
+            },
+            {
+              "type": "demand",
+              "high": 0.86286,
+              "low": 0.86179,
+              "strength": "strong",
+              "index": 56
+            },
+            {
+              "type": "demand",
+              "high": 0.86663,
+              "low": 0.86547,
+              "strength": "strong",
+              "index": 68
+            },
+            {
+              "type": "supply",
+              "high": 0.86674,
+              "low": 0.86604,
+              "strength": "strong",
+              "index": 91
+            },
+            {
+              "type": "supply",
+              "high": 0.86501,
+              "low": 0.86404,
+              "strength": "strong",
+              "index": 102
+            },
+            {
+              "type": "demand",
+              "high": 0.86432,
+              "low": 0.86316,
+              "strength": "strong",
+              "index": 108
+            },
+            {
               "type": "supply",
               "high": 0.86388,
               "low": 0.86346,
               "strength": "strong",
-              "index": 60
+              "index": 131
             },
             {
               "type": "demand",
               "high": 0.86391,
               "low": 0.86252,
               "strength": "strong",
-              "index": 62
+              "index": 133
             },
             {
               "type": "demand",
               "high": 0.86351,
               "low": 0.86243,
               "strength": "strong",
-              "index": 84
+              "index": 155
+            },
+            {
+              "type": "supply",
+              "high": 0.86383,
+              "low": 0.86249,
+              "strength": "strong",
+              "index": 162
             }
           ],
           "fibs": {
-            "fib_618": 0.86388412,
-            "fib_786": 0.86444524
+            "fib_618": 0.86319838,
+            "fib_786": 0.86284726
           },
-          "trend": "bearish",
+          "trend": "bullish",
           "price_in_zone": true,
           "price_at_fib": true,
-          "zone_type": "demand",
+          "zone_type": "supply",
           "score": 0,
           "sweep_detected": false,
           "sweep_info": null,
           "active_zone": {
-            "type": "demand",
-            "high": 0.86391,
-            "low": 0.86252,
+            "type": "supply",
+            "high": 0.86501,
+            "low": 0.86404,
             "strength": "strong",
-            "index": 62
+            "index": 102
           },
           "fib_level": "61.8%"
         },
         "H1": {
           "zones": [
             {
-              "type": "demand",
-              "high": 0.86315,
-              "low": 0.86246,
+              "type": "supply",
+              "high": 0.86348,
+              "low": 0.86322,
               "strength": "strong",
-              "index": 37
+              "index": 43
+            },
+            {
+              "type": "supply",
+              "high": 0.86363,
+              "low": 0.8623,
+              "strength": "strong",
+              "index": 54
             },
             {
               "type": "demand",
-              "high": 0.86308,
-              "low": 0.86262,
+              "high": 0.8638,
+              "low": 0.86243,
               "strength": "strong",
-              "index": 47
+              "index": 56
             },
             {
               "type": "demand",
-              "high": 0.86449,
-              "low": 0.86231,
+              "high": 0.86307,
+              "low": 0.86239,
               "strength": "strong",
-              "index": 58
+              "index": 62
             }
           ],
           "fibs": {
-            "fib_618": 0.86371454,
-            "fib_786": 0.8640555799999999
+            "fib_618": 0.86290252,
+            "fib_786": 0.86242204
           },
           "trend": "bullish",
-          "price_in_zone": true,
-          "price_at_fib": true,
-          "zone_type": "demand",
-          "score": 0,
-          "sweep_detected": false,
-          "sweep_info": null,
-          "active_zone": {
-            "type": "demand",
-            "high": 0.86315,
-            "low": 0.86246,
-            "strength": "strong",
-            "index": 37
-          },
-          "fib_level": "61.8%"
-        }
-      },
-      "current_price": 0.86303,
-      "position_size": 0.31,
-      "risk_amount": 50.0
-    },
-    {
-      "symbol": "GBP/USD",
-      "timestamp": "2026-06-12T11:57:36.372684",
-      "action": "SELL",
-      "score": 70,
-      "zone_type": "supply",
-      "reasons": [
-        "H4 supply zone",
-        "H1 supply zone",
-        "H4-H1 alignment",
-        "D1 at 61.8%",
-        "H1 at 61.8%"
-      ],
-      "entry": 1.34168,
-      "stop_loss": 1.3463231468669286,
-      "take_profit": 1.327750559399214,
-      "sweep": false,
-      "timeframes": {
-        "D1": {
-          "zones": [],
-          "fibs": {
-            "fib_618": 1.3439679,
-            "fib_786": 1.3459082999999998
-          },
-          "trend": "bearish",
           "price_in_zone": false,
           "price_at_fib": true,
           "zone_type": null,
@@ -244,72 +405,149 @@
           "sweep_detected": false,
           "sweep_info": null,
           "fib_level": "61.8%"
+        }
+      },
+      "current_price": 0.86468,
+      "position_size": 0.27,
+      "risk_amount": 50.0
+    },
+    {
+      "symbol": "GBP/USD",
+      "timestamp": "2026-06-15T13:56:05.317332",
+      "action": "WAIT",
+      "score": 45,
+      "zone_type": null,
+      "reasons": [
+        "H4 demand zone",
+        "H1 at 61.8%",
+        "H4 liquidity sweep \u2713"
+      ],
+      "entry": null,
+      "stop_loss": null,
+      "take_profit": null,
+      "sweep": true,
+      "timeframes": {
+        "D1": {
+          "zones": [
+            {
+              "type": "supply",
+              "high": 1.34177,
+              "low": 1.33109,
+              "strength": "strong",
+              "index": 20
+            },
+            {
+              "type": "supply",
+              "high": 1.33645,
+              "low": 1.32244,
+              "strength": "strong",
+              "index": 30
+            },
+            {
+              "type": "supply",
+              "high": 1.35762,
+              "low": 1.34648,
+              "strength": "strong",
+              "index": 72
+            },
+            {
+              "type": "supply",
+              "high": 1.36043,
+              "low": 1.3565,
+              "strength": "strong",
+              "index": 77
+            },
+            {
+              "type": "demand",
+              "high": 1.36043,
+              "low": 1.35135,
+              "strength": "strong",
+              "index": 79
+            },
+            {
+              "type": "supply",
+              "high": 1.3638,
+              "low": 1.35465,
+              "strength": "strong",
+              "index": 83
+            },
+            {
+              "type": "demand",
+              "high": 1.33702,
+              "low": 1.33056,
+              "strength": "strong",
+              "index": 113
+            }
+          ],
+          "fibs": {
+            "fib_618": 1.3373672399999998,
+            "fib_786": 1.33437348
+          },
+          "trend": "bearish",
+          "price_in_zone": false,
+          "price_at_fib": false,
+          "zone_type": null,
+          "score": 0,
+          "sweep_detected": false,
+          "sweep_info": null
         },
         "H4": {
           "zones": [
             {
-              "type": "supply",
-              "high": 1.3357,
-              "low": 1.33337,
+              "type": "demand",
+              "high": 1.34371,
+              "low": 1.34141,
               "strength": "strong",
-              "index": 62
+              "index": 36
+            },
+            {
+              "type": "supply",
+              "high": 1.34447,
+              "low": 1.3428,
+              "strength": "strong",
+              "index": 47
+            },
+            {
+              "type": "demand",
+              "high": 1.34494,
+              "low": 1.34286,
+              "strength": "strong",
+              "index": 49
+            },
+            {
+              "type": "supply",
+              "high": 1.35095,
+              "low": 1.34923,
+              "strength": "strong",
+              "index": 56
+            },
+            {
+              "type": "demand",
+              "high": 1.34689,
+              "low": 1.34535,
+              "strength": "strong",
+              "index": 99
             },
             {
               "type": "demand",
               "high": 1.33523,
               "low": 1.33319,
               "strength": "strong",
-              "index": 70
+              "index": 141
             },
             {
               "type": "supply",
               "high": 1.34232,
               "low": 1.33754,
               "strength": "strong",
-              "index": 80
+              "index": 151
             },
             {
               "type": "demand",
-              "high": 1.33962,
-              "low": 1.33503,
+              "high": 1.34248,
+              "low": 1.3387,
               "strength": "strong",
-              "index": 82
-            }
-          ],
-          "fibs": {
-            "fib_618": 1.33505232,
-            "fib_786": 1.33307664
-          },
-          "trend": "bullish",
-          "price_in_zone": true,
-          "price_at_fib": false,
-          "zone_type": "supply",
-          "score": 0,
-          "sweep_detected": false,
-          "sweep_info": null,
-          "active_zone": {
-            "type": "supply",
-            "high": 1.34232,
-            "low": 1.33754,
-            "strength": "strong",
-            "index": 80
-          }
-        },
-        "H1": {
-          "zones": [
-            {
-              "type": "demand",
-              "high": 1.33707,
-              "low": 1.33503,
-              "strength": "strong",
-              "index": 39
-            },
-            {
-              "type": "supply",
-              "high": 1.34182,
-              "low": 1.34052,
-              "strength": "strong",
-              "index": 68
+              "index": 176
             }
           ],
           "fibs": {
@@ -318,89 +556,236 @@
           },
           "trend": "bullish",
           "price_in_zone": true,
+          "price_at_fib": false,
+          "zone_type": "demand",
+          "score": 0,
+          "sweep_detected": true,
+          "sweep_info": {
+            "type": "demand_sweep",
+            "swept_to": 1.33994,
+            "closed_at": 1.3445,
+            "confirmed_at": 1.34504,
+            "label": "Liquidity sweep below demand \u2014 confirmed"
+          },
+          "active_zone": {
+            "type": "demand",
+            "high": 1.34371,
+            "low": 1.34141,
+            "strength": "strong",
+            "index": 36
+          }
+        },
+        "H1": {
+          "zones": [
+            {
+              "type": "supply",
+              "high": 1.34075,
+              "low": 1.34046,
+              "strength": "strong",
+              "index": 29
+            },
+            {
+              "type": "supply",
+              "high": 1.34081,
+              "low": 1.34069,
+              "strength": "strong",
+              "index": 48
+            },
+            {
+              "type": "supply",
+              "high": 1.34095,
+              "low": 1.33982,
+              "strength": "strong",
+              "index": 57
+            }
+          ],
+          "fibs": {
+            "fib_618": 1.34154208,
+            "fib_786": 1.34029216
+          },
+          "trend": "bullish",
+          "price_in_zone": false,
           "price_at_fib": true,
-          "zone_type": "supply",
+          "zone_type": null,
           "score": 0,
           "sweep_detected": false,
           "sweep_info": null,
-          "active_zone": {
-            "type": "supply",
-            "high": 1.34182,
-            "low": 1.34052,
-            "strength": "strong",
-            "index": 68
-          },
           "fib_level": "61.8%"
         }
       },
-      "current_price": 1.34168,
-      "position_size": 0.11,
-      "risk_amount": 50.0
+      "current_price": 1.34295
     },
     {
       "symbol": "USD/JPY",
-      "timestamp": "2026-06-12T11:57:36.433961",
-      "action": "WAIT",
-      "score": 50,
-      "zone_type": null,
+      "timestamp": "2026-06-15T13:56:05.432723",
+      "action": "BUY",
+      "score": 75,
+      "zone_type": "demand",
       "reasons": [
+        "D1 demand zone",
         "H4 supply zone",
         "H4 at 61.8%",
         "H1 at 61.8%"
       ],
-      "entry": null,
-      "stop_loss": null,
-      "take_profit": null,
+      "entry": 160.11628,
+      "stop_loss": 159.6973128737294,
+      "take_profit": 161.37318137881175,
       "sweep": false,
       "timeframes": {
         "D1": {
-          "zones": [],
+          "zones": [
+            {
+              "type": "demand",
+              "high": 158.9018,
+              "low": 157.27956,
+              "strength": "strong",
+              "index": 23
+            },
+            {
+              "type": "supply",
+              "high": 160.08751,
+              "low": 159.14647,
+              "strength": "strong",
+              "index": 28
+            },
+            {
+              "type": "demand",
+              "high": 159.75177,
+              "low": 158.74144,
+              "strength": "strong",
+              "index": 30
+            },
+            {
+              "type": "demand",
+              "high": 159.97571,
+              "low": 158.28981,
+              "strength": "strong",
+              "index": 45
+            },
+            {
+              "type": "supply",
+              "high": 159.85746,
+              "low": 158.80777,
+              "strength": "strong",
+              "index": 57
+            },
+            {
+              "type": "supply",
+              "high": 159.32576,
+              "low": 158.24595,
+              "strength": "strong",
+              "index": 60
+            },
+            {
+              "type": "demand",
+              "high": 159.46915,
+              "low": 158.71121,
+              "strength": "strong",
+              "index": 99
+            },
+            {
+              "type": "demand",
+              "high": 161.00122,
+              "low": 159.41905,
+              "strength": "strong",
+              "index": 113
+            }
+          ],
           "fibs": {
             "fib_618": 157.34214088,
             "fib_786": 156.34743976
           },
           "trend": "bullish",
-          "price_in_zone": false,
+          "price_in_zone": true,
           "price_at_fib": false,
-          "zone_type": null,
+          "zone_type": "demand",
           "score": 0,
           "sweep_detected": false,
-          "sweep_info": null
+          "sweep_info": null,
+          "active_zone": {
+            "type": "demand",
+            "high": 161.00122,
+            "low": 159.41905,
+            "strength": "strong",
+            "index": 113
+          }
         },
         "H4": {
           "zones": [
             {
               "type": "supply",
+              "high": 159.10933,
+              "low": 158.8778,
+              "strength": "strong",
+              "index": 24
+            },
+            {
+              "type": "supply",
+              "high": 159.3454,
+              "low": 158.92473,
+              "strength": "strong",
+              "index": 31
+            },
+            {
+              "type": "demand",
+              "high": 159.32364,
+              "low": 159.17856,
+              "strength": "strong",
+              "index": 64
+            },
+            {
+              "type": "supply",
+              "high": 159.65575,
+              "low": 159.4514,
+              "strength": "strong",
+              "index": 70
+            },
+            {
+              "type": "supply",
+              "high": 160.00159,
+              "low": 159.88041,
+              "strength": "strong",
+              "index": 105
+            },
+            {
+              "type": "demand",
+              "high": 159.99526,
+              "low": 159.90308,
+              "strength": "strong",
+              "index": 119
+            },
+            {
+              "type": "supply",
               "high": 161.00122,
               "low": 159.41905,
               "strength": "strong",
-              "index": 62
+              "index": 133
             },
             {
               "type": "supply",
               "high": 160.39791,
               "low": 160.20366,
               "strength": "strong",
-              "index": 65
+              "index": 136
             },
             {
               "type": "demand",
               "high": 160.22255,
               "low": 160.04099,
               "strength": "strong",
-              "index": 73
+              "index": 144
             },
             {
               "type": "supply",
               "high": 160.59951,
               "low": 160.46766,
               "strength": "strong",
-              "index": 86
+              "index": 157
             }
           ],
           "fibs": {
-            "fib_618": 159.86998572000002,
-            "fib_786": 159.67166844
+            "fib_618": 159.90430812,
+            "fib_786": 159.70545324
           },
           "trend": "bullish",
           "price_in_zone": true,
@@ -414,30 +799,30 @@
             "high": 161.00122,
             "low": 159.41905,
             "strength": "strong",
-            "index": 62
+            "index": 133
           },
           "fib_level": "61.8%"
         },
         "H1": {
           "zones": [
             {
-              "type": "supply",
-              "high": 160.59951,
-              "low": 160.51544,
+              "type": "demand",
+              "high": 160.23662,
+              "low": 160.21538,
               "strength": "strong",
-              "index": 52
+              "index": 37
             },
             {
-              "type": "demand",
-              "high": 160.30368,
-              "low": 160.21501,
+              "type": "supply",
+              "high": 160.23009,
+              "low": 160.21968,
               "strength": "strong",
-              "index": 68
+              "index": 48
             }
           ],
           "fibs": {
-            "fib_618": 160.22391996,
-            "fib_786": 160.38910092
+            "fib_618": 159.90430812,
+            "fib_786": 159.70545324
           },
           "trend": "bearish",
           "price_in_zone": false,
@@ -449,18 +834,18 @@
           "fib_level": "61.8%"
         }
       },
-      "current_price": 160.10085
+      "current_price": 160.11628,
+      "position_size": 0.12,
+      "risk_amount": 50.0
     },
     {
       "symbol": "AUD/USD",
-      "timestamp": "2026-06-12T11:57:36.495486",
+      "timestamp": "2026-06-15T13:56:05.505886",
       "action": "WAIT",
-      "score": 50,
+      "score": 15,
       "zone_type": null,
       "reasons": [
-        "H4 demand zone",
-        "H1 supply zone",
-        "H4 at 61.8%"
+        "H1 at 61.8%"
       ],
       "entry": null,
       "stop_loss": null,
@@ -468,7 +853,43 @@
       "sweep": false,
       "timeframes": {
         "D1": {
-          "zones": [],
+          "zones": [
+            {
+              "type": "demand",
+              "high": 0.70466,
+              "low": 0.69507,
+              "strength": "strong",
+              "index": 28
+            },
+            {
+              "type": "demand",
+              "high": 0.6896,
+              "low": 0.68347,
+              "strength": "strong",
+              "index": 43
+            },
+            {
+              "type": "supply",
+              "high": 0.72208,
+              "low": 0.71544,
+              "strength": "strong",
+              "index": 62
+            },
+            {
+              "type": "supply",
+              "high": 0.71997,
+              "low": 0.71291,
+              "strength": "strong",
+              "index": 72
+            },
+            {
+              "type": "demand",
+              "high": 0.72202,
+              "low": 0.71357,
+              "strength": "strong",
+              "index": 79
+            }
+          ],
           "fibs": {
             "fib_618": 0.71613978,
             "fib_786": 0.71785506
@@ -484,128 +905,79 @@
         "H4": {
           "zones": [
             {
+              "type": "supply",
+              "high": 0.71817,
+              "low": 0.71676,
+              "strength": "strong",
+              "index": 56
+            },
+            {
+              "type": "demand",
+              "high": 0.71723,
+              "low": 0.71559,
+              "strength": "strong",
+              "index": 59
+            },
+            {
+              "type": "supply",
+              "high": 0.71432,
+              "low": 0.71257,
+              "strength": "strong",
+              "index": 68
+            },
+            {
+              "type": "supply",
+              "high": 0.71904,
+              "low": 0.7177,
+              "strength": "strong",
+              "index": 95
+            },
+            {
+              "type": "supply",
+              "high": 0.71832,
+              "low": 0.71711,
+              "strength": "strong",
+              "index": 105
+            },
+            {
+              "type": "supply",
+              "high": 0.71377,
+              "low": 0.71061,
+              "strength": "strong",
+              "index": 119
+            },
+            {
               "type": "demand",
               "high": 0.70616,
               "low": 0.70353,
               "strength": "strong",
-              "index": 66
+              "index": 137
             },
             {
               "type": "demand",
               "high": 0.70544,
               "low": 0.70349,
               "strength": "strong",
-              "index": 70
-            },
-            {
-              "type": "supply",
-              "high": 0.7035,
-              "low": 0.70129,
-              "strength": "strong",
-              "index": 76
+              "index": 141
             },
             {
               "type": "supply",
               "high": 0.70372,
               "low": 0.69986,
               "strength": "strong",
-              "index": 80
-            },
-            {
-              "type": "demand",
-              "high": 0.70228,
-              "low": 0.69853,
-              "strength": "strong",
-              "index": 82
+              "index": 151
             },
             {
               "type": "demand",
               "high": 0.70002,
               "low": 0.69789,
               "strength": "strong",
-              "index": 86
+              "index": 157
             }
           ],
           "fibs": {
-            "fib_618": 0.7028053599999999,
-            "fib_786": 0.70255672
-          },
-          "trend": "bullish",
-          "price_in_zone": true,
-          "price_at_fib": true,
-          "zone_type": "demand",
-          "score": 0,
-          "sweep_detected": false,
-          "sweep_info": null,
-          "active_zone": {
-            "type": "demand",
-            "high": 0.70616,
-            "low": 0.70353,
-            "strength": "strong",
-            "index": 66
-          },
-          "fib_level": "61.8%"
-        },
-        "H1": {
-          "zones": [
-            {
-              "type": "demand",
-              "high": 0.70076,
-              "low": 0.69987,
-              "strength": "strong",
-              "index": 43
-            },
-            {
-              "type": "supply",
-              "high": 0.70453,
-              "low": 0.70341,
-              "strength": "strong",
-              "index": 68
-            }
-          ],
-          "fibs": {
-            "fib_618": 0.7008122999999999,
-            "fib_786": 0.6995271
-          },
-          "trend": "bullish",
-          "price_in_zone": true,
-          "price_at_fib": false,
-          "zone_type": "supply",
-          "score": 0,
-          "sweep_detected": false,
-          "sweep_info": null,
-          "active_zone": {
-            "type": "supply",
-            "high": 0.70453,
-            "low": 0.70341,
-            "strength": "strong",
-            "index": 68
-          }
-        }
-      },
-      "current_price": 0.7043
-    },
-    {
-      "symbol": "USD/CAD",
-      "timestamp": "2026-06-12T11:57:36.569053",
-      "action": "WAIT",
-      "score": 40,
-      "zone_type": null,
-      "reasons": [
-        "H4 at 61.8%",
-        "H1 at 61.8%",
-        "Trend: bullish"
-      ],
-      "entry": null,
-      "stop_loss": null,
-      "take_profit": null,
-      "sweep": false,
-      "timeframes": {
-        "D1": {
-          "zones": [],
-          "fibs": {
-            "fib_618": 1.38093596,
-            "fib_786": 1.37929292
+            "fib_618": 0.7044847799999999,
+            "fib_786": 0.7041000599999999
           },
           "trend": "bullish",
           "price_in_zone": false,
@@ -615,33 +987,217 @@
           "sweep_detected": false,
           "sweep_info": null
         },
+        "H1": {
+          "zones": [
+            {
+              "type": "supply",
+              "high": 0.7046,
+              "low": 0.70421,
+              "strength": "strong",
+              "index": 38
+            },
+            {
+              "type": "supply",
+              "high": 0.70448,
+              "low": 0.70426,
+              "strength": "strong",
+              "index": 44
+            },
+            {
+              "type": "supply",
+              "high": 0.70448,
+              "low": 0.70439,
+              "strength": "strong",
+              "index": 48
+            }
+          ],
+          "fibs": {
+            "fib_618": 0.70556584,
+            "fib_786": 0.70470568
+          },
+          "trend": "bullish",
+          "price_in_zone": false,
+          "price_at_fib": true,
+          "zone_type": null,
+          "score": 0,
+          "sweep_detected": false,
+          "sweep_info": null,
+          "fib_level": "61.8%"
+        }
+      },
+      "current_price": 0.70742
+    },
+    {
+      "symbol": "USD/CAD",
+      "timestamp": "2026-06-15T13:56:05.578008",
+      "action": "BUY",
+      "score": 70,
+      "zone_type": "demand",
+      "reasons": [
+        "D1 demand zone",
+        "H1 demand zone",
+        "H4 at 61.8%",
+        "H1 at 61.8%"
+      ],
+      "entry": 1.39681,
+      "stop_loss": 1.3941587563895368,
+      "take_profit": 1.4047637308313903,
+      "sweep": false,
+      "timeframes": {
+        "D1": {
+          "zones": [
+            {
+              "type": "demand",
+              "high": 1.36041,
+              "low": 1.35426,
+              "strength": "strong",
+              "index": 24
+            },
+            {
+              "type": "demand",
+              "high": 1.37428,
+              "low": 1.36502,
+              "strength": "strong",
+              "index": 61
+            },
+            {
+              "type": "supply",
+              "high": 1.36877,
+              "low": 1.36616,
+              "strength": "strong",
+              "index": 70
+            },
+            {
+              "type": "supply",
+              "high": 1.37126,
+              "low": 1.36134,
+              "strength": "strong",
+              "index": 73
+            },
+            {
+              "type": "demand",
+              "high": 1.36417,
+              "low": 1.35793,
+              "strength": "strong",
+              "index": 80
+            },
+            {
+              "type": "supply",
+              "high": 1.38351,
+              "low": 1.37924,
+              "strength": "strong",
+              "index": 98
+            },
+            {
+              "type": "demand",
+              "high": 1.38107,
+              "low": 1.37876,
+              "strength": "strong",
+              "index": 105
+            },
+            {
+              "type": "demand",
+              "high": 1.39687,
+              "low": 1.39011,
+              "strength": "strong",
+              "index": 115
+            }
+          ],
+          "fibs": {
+            "fib_618": 1.38093596,
+            "fib_786": 1.37929292
+          },
+          "trend": "bullish",
+          "price_in_zone": true,
+          "price_at_fib": false,
+          "zone_type": "demand",
+          "score": 0,
+          "sweep_detected": false,
+          "sweep_info": null,
+          "active_zone": {
+            "type": "demand",
+            "high": 1.39687,
+            "low": 1.39011,
+            "strength": "strong",
+            "index": 115
+          }
+        },
         "H4": {
           "zones": [
+            {
+              "type": "demand",
+              "high": 1.38213,
+              "low": 1.37961,
+              "strength": "strong",
+              "index": 52
+            },
+            {
+              "type": "demand",
+              "high": 1.38087,
+              "low": 1.37989,
+              "strength": "strong",
+              "index": 57
+            },
+            {
+              "type": "demand",
+              "high": 1.38145,
+              "low": 1.38042,
+              "strength": "strong",
+              "index": 64
+            },
+            {
+              "type": "demand",
+              "high": 1.38514,
+              "low": 1.38213,
+              "strength": "strong",
+              "index": 67
+            },
+            {
+              "type": "supply",
+              "high": 1.38696,
+              "low": 1.38454,
+              "strength": "strong",
+              "index": 71
+            },
+            {
+              "type": "demand",
+              "high": 1.39171,
+              "low": 1.38815,
+              "strength": "strong",
+              "index": 115
+            },
+            {
+              "type": "demand",
+              "high": 1.3909,
+              "low": 1.38692,
+              "strength": "strong",
+              "index": 120
+            },
             {
               "type": "demand",
               "high": 1.39411,
               "low": 1.39193,
               "strength": "strong",
-              "index": 62
+              "index": 133
             },
             {
               "type": "supply",
               "high": 1.39608,
               "low": 1.39433,
               "strength": "strong",
-              "index": 70
+              "index": 141
             },
             {
               "type": "demand",
               "high": 1.39505,
               "low": 1.39319,
               "strength": "strong",
-              "index": 83
+              "index": 154
             }
           ],
           "fibs": {
-            "fib_618": 1.39269232,
-            "fib_786": 1.39155664
+            "fib_618": 1.39393382,
+            "fib_786": 1.39225214
           },
           "trend": "bullish",
           "price_in_zone": false,
@@ -655,113 +1211,471 @@
         "H1": {
           "zones": [
             {
-              "type": "supply",
-              "high": 1.39505,
-              "low": 1.39432,
+              "type": "demand",
+              "high": 1.39926,
+              "low": 1.39837,
               "strength": "strong",
-              "index": 39
+              "index": 36
             },
             {
               "type": "demand",
-              "high": 1.39785,
-              "low": 1.39712,
+              "high": 1.39929,
+              "low": 1.39869,
               "strength": "strong",
-              "index": 68
+              "index": 45
+            },
+            {
+              "type": "demand",
+              "high": 1.3995,
+              "low": 1.39876,
+              "strength": "strong",
+              "index": 53
+            },
+            {
+              "type": "demand",
+              "high": 1.39679,
+              "low": 1.3951,
+              "strength": "strong",
+              "index": 67
             }
           ],
           "fibs": {
-            "fib_618": 1.3996742,
-            "fib_786": 1.4008334
+            "fib_618": 1.39810348,
+            "fib_786": 1.3989199600000002
           },
-          "trend": "bullish",
-          "price_in_zone": false,
+          "trend": "bearish",
+          "price_in_zone": true,
           "price_at_fib": true,
-          "zone_type": null,
+          "zone_type": "demand",
           "score": 0,
           "sweep_detected": false,
           "sweep_info": null,
+          "active_zone": {
+            "type": "demand",
+            "high": 1.39679,
+            "low": 1.3951,
+            "strength": "strong",
+            "index": 67
+          },
           "fib_level": "61.8%"
         }
       },
-      "current_price": 1.3982
+      "current_price": 1.39681,
+      "position_size": 0.19,
+      "risk_amount": 50.0
     }
   ],
   "actionable": [
     {
       "symbol": "EUR/GBP",
-      "timestamp": "2026-06-12T11:57:36.302300",
+      "timestamp": "2026-06-15T13:56:05.223392",
       "action": "BUY",
-      "score": 85,
+      "score": 90,
       "zone_type": "demand",
       "reasons": [
-        "H4 demand zone",
-        "H1 demand zone",
-        "H4-H1 alignment",
+        "D1 demand zone",
+        "H4 supply zone",
         "D1 at 61.8%",
         "H4 at 61.8%",
         "H1 at 61.8%"
       ],
-      "entry": 0.86303,
-      "stop_loss": 0.8614125943735418,
-      "take_profit": 0.8678822168793744,
+      "entry": 0.86468,
+      "stop_loss": 0.8628369237493375,
+      "take_profit": 0.8702092287519876,
       "sweep": false,
       "timeframes": {
         "D1": {
-          "zones": [],
+          "zones": [
+            {
+              "type": "supply",
+              "high": 0.86886,
+              "low": 0.8648,
+              "strength": "strong",
+              "index": 21
+            },
+            {
+              "type": "demand",
+              "high": 0.86697,
+              "low": 0.86354,
+              "strength": "strong",
+              "index": 39
+            },
+            {
+              "type": "supply",
+              "high": 0.86779,
+              "low": 0.86537,
+              "strength": "strong",
+              "index": 73
+            },
+            {
+              "type": "demand",
+              "high": 0.86563,
+              "low": 0.86304,
+              "strength": "strong",
+              "index": 83
+            },
+            {
+              "type": "supply",
+              "high": 0.86567,
+              "low": 0.86316,
+              "strength": "strong",
+              "index": 109
+            },
+            {
+              "type": "demand",
+              "high": 0.86491,
+              "low": 0.86159,
+              "strength": "strong",
+              "index": 112
+            }
+          ],
           "fibs": {
             "fib_618": 0.86565026,
             "fib_786": 0.86675402
           },
           "trend": "bearish",
-          "price_in_zone": false,
+          "price_in_zone": true,
           "price_at_fib": true,
-          "zone_type": null,
+          "zone_type": "demand",
           "score": 0,
           "sweep_detected": false,
           "sweep_info": null,
+          "active_zone": {
+            "type": "demand",
+            "high": 0.86697,
+            "low": 0.86354,
+            "strength": "strong",
+            "index": 39
+          },
           "fib_level": "61.8%"
         },
         "H4": {
           "zones": [
             {
+              "type": "demand",
+              "high": 0.86409,
+              "low": 0.86301,
+              "strength": "strong",
+              "index": 47
+            },
+            {
+              "type": "demand",
+              "high": 0.86286,
+              "low": 0.86179,
+              "strength": "strong",
+              "index": 56
+            },
+            {
+              "type": "demand",
+              "high": 0.86663,
+              "low": 0.86547,
+              "strength": "strong",
+              "index": 68
+            },
+            {
+              "type": "supply",
+              "high": 0.86674,
+              "low": 0.86604,
+              "strength": "strong",
+              "index": 91
+            },
+            {
+              "type": "supply",
+              "high": 0.86501,
+              "low": 0.86404,
+              "strength": "strong",
+              "index": 102
+            },
+            {
+              "type": "demand",
+              "high": 0.86432,
+              "low": 0.86316,
+              "strength": "strong",
+              "index": 108
+            },
+            {
               "type": "supply",
               "high": 0.86388,
               "low": 0.86346,
               "strength": "strong",
-              "index": 60
+              "index": 131
             },
             {
               "type": "demand",
               "high": 0.86391,
               "low": 0.86252,
               "strength": "strong",
-              "index": 62
+              "index": 133
             },
             {
               "type": "demand",
               "high": 0.86351,
               "low": 0.86243,
               "strength": "strong",
-              "index": 84
+              "index": 155
+            },
+            {
+              "type": "supply",
+              "high": 0.86383,
+              "low": 0.86249,
+              "strength": "strong",
+              "index": 162
             }
           ],
           "fibs": {
-            "fib_618": 0.86388412,
-            "fib_786": 0.86444524
+            "fib_618": 0.86319838,
+            "fib_786": 0.86284726
           },
-          "trend": "bearish",
+          "trend": "bullish",
           "price_in_zone": true,
           "price_at_fib": true,
+          "zone_type": "supply",
+          "score": 0,
+          "sweep_detected": false,
+          "sweep_info": null,
+          "active_zone": {
+            "type": "supply",
+            "high": 0.86501,
+            "low": 0.86404,
+            "strength": "strong",
+            "index": 102
+          },
+          "fib_level": "61.8%"
+        },
+        "H1": {
+          "zones": [
+            {
+              "type": "supply",
+              "high": 0.86348,
+              "low": 0.86322,
+              "strength": "strong",
+              "index": 43
+            },
+            {
+              "type": "supply",
+              "high": 0.86363,
+              "low": 0.8623,
+              "strength": "strong",
+              "index": 54
+            },
+            {
+              "type": "demand",
+              "high": 0.8638,
+              "low": 0.86243,
+              "strength": "strong",
+              "index": 56
+            },
+            {
+              "type": "demand",
+              "high": 0.86307,
+              "low": 0.86239,
+              "strength": "strong",
+              "index": 62
+            }
+          ],
+          "fibs": {
+            "fib_618": 0.86290252,
+            "fib_786": 0.86242204
+          },
+          "trend": "bullish",
+          "price_in_zone": false,
+          "price_at_fib": true,
+          "zone_type": null,
+          "score": 0,
+          "sweep_detected": false,
+          "sweep_info": null,
+          "fib_level": "61.8%"
+        }
+      },
+      "current_price": 0.86468,
+      "position_size": 0.27,
+      "risk_amount": 50.0
+    },
+    {
+      "symbol": "USD/JPY",
+      "timestamp": "2026-06-15T13:56:05.432723",
+      "action": "BUY",
+      "score": 75,
+      "zone_type": "demand",
+      "reasons": [
+        "D1 demand zone",
+        "H4 supply zone",
+        "H4 at 61.8%",
+        "H1 at 61.8%"
+      ],
+      "entry": 160.11628,
+      "stop_loss": 159.6973128737294,
+      "take_profit": 161.37318137881175,
+      "sweep": false,
+      "timeframes": {
+        "D1": {
+          "zones": [
+            {
+              "type": "demand",
+              "high": 158.9018,
+              "low": 157.27956,
+              "strength": "strong",
+              "index": 23
+            },
+            {
+              "type": "supply",
+              "high": 160.08751,
+              "low": 159.14647,
+              "strength": "strong",
+              "index": 28
+            },
+            {
+              "type": "demand",
+              "high": 159.75177,
+              "low": 158.74144,
+              "strength": "strong",
+              "index": 30
+            },
+            {
+              "type": "demand",
+              "high": 159.97571,
+              "low": 158.28981,
+              "strength": "strong",
+              "index": 45
+            },
+            {
+              "type": "supply",
+              "high": 159.85746,
+              "low": 158.80777,
+              "strength": "strong",
+              "index": 57
+            },
+            {
+              "type": "supply",
+              "high": 159.32576,
+              "low": 158.24595,
+              "strength": "strong",
+              "index": 60
+            },
+            {
+              "type": "demand",
+              "high": 159.46915,
+              "low": 158.71121,
+              "strength": "strong",
+              "index": 99
+            },
+            {
+              "type": "demand",
+              "high": 161.00122,
+              "low": 159.41905,
+              "strength": "strong",
+              "index": 113
+            }
+          ],
+          "fibs": {
+            "fib_618": 157.34214088,
+            "fib_786": 156.34743976
+          },
+          "trend": "bullish",
+          "price_in_zone": true,
+          "price_at_fib": false,
           "zone_type": "demand",
           "score": 0,
           "sweep_detected": false,
           "sweep_info": null,
           "active_zone": {
             "type": "demand",
-            "high": 0.86391,
-            "low": 0.86252,
+            "high": 161.00122,
+            "low": 159.41905,
             "strength": "strong",
-            "index": 62
+            "index": 113
+          }
+        },
+        "H4": {
+          "zones": [
+            {
+              "type": "supply",
+              "high": 159.10933,
+              "low": 158.8778,
+              "strength": "strong",
+              "index": 24
+            },
+            {
+              "type": "supply",
+              "high": 159.3454,
+              "low": 158.92473,
+              "strength": "strong",
+              "index": 31
+            },
+            {
+              "type": "demand",
+              "high": 159.32364,
+              "low": 159.17856,
+              "strength": "strong",
+              "index": 64
+            },
+            {
+              "type": "supply",
+              "high": 159.65575,
+              "low": 159.4514,
+              "strength": "strong",
+              "index": 70
+            },
+            {
+              "type": "supply",
+              "high": 160.00159,
+              "low": 159.88041,
+              "strength": "strong",
+              "index": 105
+            },
+            {
+              "type": "demand",
+              "high": 159.99526,
+              "low": 159.90308,
+              "strength": "strong",
+              "index": 119
+            },
+            {
+              "type": "supply",
+              "high": 161.00122,
+              "low": 159.41905,
+              "strength": "strong",
+              "index": 133
+            },
+            {
+              "type": "supply",
+              "high": 160.39791,
+              "low": 160.20366,
+              "strength": "strong",
+              "index": 136
+            },
+            {
+              "type": "demand",
+              "high": 160.22255,
+              "low": 160.04099,
+              "strength": "strong",
+              "index": 144
+            },
+            {
+              "type": "supply",
+              "high": 160.59951,
+              "low": 160.46766,
+              "strength": "strong",
+              "index": 157
+            }
+          ],
+          "fibs": {
+            "fib_618": 159.90430812,
+            "fib_786": 159.70545324
+          },
+          "trend": "bullish",
+          "price_in_zone": true,
+          "price_at_fib": true,
+          "zone_type": "supply",
+          "score": 0,
+          "sweep_detected": false,
+          "sweep_info": null,
+          "active_zone": {
+            "type": "supply",
+            "high": 161.00122,
+            "low": 159.41905,
+            "strength": "strong",
+            "index": 133
           },
           "fib_level": "61.8%"
         },
@@ -769,74 +1683,22 @@
           "zones": [
             {
               "type": "demand",
-              "high": 0.86315,
-              "low": 0.86246,
+              "high": 160.23662,
+              "low": 160.21538,
               "strength": "strong",
               "index": 37
             },
             {
-              "type": "demand",
-              "high": 0.86308,
-              "low": 0.86262,
+              "type": "supply",
+              "high": 160.23009,
+              "low": 160.21968,
               "strength": "strong",
-              "index": 47
-            },
-            {
-              "type": "demand",
-              "high": 0.86449,
-              "low": 0.86231,
-              "strength": "strong",
-              "index": 58
+              "index": 48
             }
           ],
           "fibs": {
-            "fib_618": 0.86371454,
-            "fib_786": 0.8640555799999999
-          },
-          "trend": "bullish",
-          "price_in_zone": true,
-          "price_at_fib": true,
-          "zone_type": "demand",
-          "score": 0,
-          "sweep_detected": false,
-          "sweep_info": null,
-          "active_zone": {
-            "type": "demand",
-            "high": 0.86315,
-            "low": 0.86246,
-            "strength": "strong",
-            "index": 37
-          },
-          "fib_level": "61.8%"
-        }
-      },
-      "current_price": 0.86303,
-      "position_size": 0.31,
-      "risk_amount": 50.0
-    },
-    {
-      "symbol": "GBP/USD",
-      "timestamp": "2026-06-12T11:57:36.372684",
-      "action": "SELL",
-      "score": 70,
-      "zone_type": "supply",
-      "reasons": [
-        "H4 supply zone",
-        "H1 supply zone",
-        "H4-H1 alignment",
-        "D1 at 61.8%",
-        "H1 at 61.8%"
-      ],
-      "entry": 1.34168,
-      "stop_loss": 1.3463231468669286,
-      "take_profit": 1.327750559399214,
-      "sweep": false,
-      "timeframes": {
-        "D1": {
-          "zones": [],
-          "fibs": {
-            "fib_618": 1.3439679,
-            "fib_786": 1.3459082999999998
+            "fib_618": 159.90430812,
+            "fib_786": 159.70545324
           },
           "trend": "bearish",
           "price_in_zone": false,
@@ -846,97 +1708,247 @@
           "sweep_detected": false,
           "sweep_info": null,
           "fib_level": "61.8%"
-        },
-        "H4": {
+        }
+      },
+      "current_price": 160.11628,
+      "position_size": 0.12,
+      "risk_amount": 50.0
+    },
+    {
+      "symbol": "USD/CAD",
+      "timestamp": "2026-06-15T13:56:05.578008",
+      "action": "BUY",
+      "score": 70,
+      "zone_type": "demand",
+      "reasons": [
+        "D1 demand zone",
+        "H1 demand zone",
+        "H4 at 61.8%",
+        "H1 at 61.8%"
+      ],
+      "entry": 1.39681,
+      "stop_loss": 1.3941587563895368,
+      "take_profit": 1.4047637308313903,
+      "sweep": false,
+      "timeframes": {
+        "D1": {
           "zones": [
             {
-              "type": "supply",
-              "high": 1.3357,
-              "low": 1.33337,
+              "type": "demand",
+              "high": 1.36041,
+              "low": 1.35426,
               "strength": "strong",
-              "index": 62
+              "index": 24
             },
             {
               "type": "demand",
-              "high": 1.33523,
-              "low": 1.33319,
+              "high": 1.37428,
+              "low": 1.36502,
+              "strength": "strong",
+              "index": 61
+            },
+            {
+              "type": "supply",
+              "high": 1.36877,
+              "low": 1.36616,
               "strength": "strong",
               "index": 70
             },
             {
               "type": "supply",
-              "high": 1.34232,
-              "low": 1.33754,
+              "high": 1.37126,
+              "low": 1.36134,
+              "strength": "strong",
+              "index": 73
+            },
+            {
+              "type": "demand",
+              "high": 1.36417,
+              "low": 1.35793,
               "strength": "strong",
               "index": 80
             },
             {
-              "type": "demand",
-              "high": 1.33962,
-              "low": 1.33503,
+              "type": "supply",
+              "high": 1.38351,
+              "low": 1.37924,
               "strength": "strong",
-              "index": 82
+              "index": 98
+            },
+            {
+              "type": "demand",
+              "high": 1.38107,
+              "low": 1.37876,
+              "strength": "strong",
+              "index": 105
+            },
+            {
+              "type": "demand",
+              "high": 1.39687,
+              "low": 1.39011,
+              "strength": "strong",
+              "index": 115
             }
           ],
           "fibs": {
-            "fib_618": 1.33505232,
-            "fib_786": 1.33307664
+            "fib_618": 1.38093596,
+            "fib_786": 1.37929292
           },
           "trend": "bullish",
           "price_in_zone": true,
           "price_at_fib": false,
-          "zone_type": "supply",
+          "zone_type": "demand",
           "score": 0,
           "sweep_detected": false,
           "sweep_info": null,
           "active_zone": {
-            "type": "supply",
-            "high": 1.34232,
-            "low": 1.33754,
+            "type": "demand",
+            "high": 1.39687,
+            "low": 1.39011,
             "strength": "strong",
-            "index": 80
+            "index": 115
           }
+        },
+        "H4": {
+          "zones": [
+            {
+              "type": "demand",
+              "high": 1.38213,
+              "low": 1.37961,
+              "strength": "strong",
+              "index": 52
+            },
+            {
+              "type": "demand",
+              "high": 1.38087,
+              "low": 1.37989,
+              "strength": "strong",
+              "index": 57
+            },
+            {
+              "type": "demand",
+              "high": 1.38145,
+              "low": 1.38042,
+              "strength": "strong",
+              "index": 64
+            },
+            {
+              "type": "demand",
+              "high": 1.38514,
+              "low": 1.38213,
+              "strength": "strong",
+              "index": 67
+            },
+            {
+              "type": "supply",
+              "high": 1.38696,
+              "low": 1.38454,
+              "strength": "strong",
+              "index": 71
+            },
+            {
+              "type": "demand",
+              "high": 1.39171,
+              "low": 1.38815,
+              "strength": "strong",
+              "index": 115
+            },
+            {
+              "type": "demand",
+              "high": 1.3909,
+              "low": 1.38692,
+              "strength": "strong",
+              "index": 120
+            },
+            {
+              "type": "demand",
+              "high": 1.39411,
+              "low": 1.39193,
+              "strength": "strong",
+              "index": 133
+            },
+            {
+              "type": "supply",
+              "high": 1.39608,
+              "low": 1.39433,
+              "strength": "strong",
+              "index": 141
+            },
+            {
+              "type": "demand",
+              "high": 1.39505,
+              "low": 1.39319,
+              "strength": "strong",
+              "index": 154
+            }
+          ],
+          "fibs": {
+            "fib_618": 1.39393382,
+            "fib_786": 1.39225214
+          },
+          "trend": "bullish",
+          "price_in_zone": false,
+          "price_at_fib": true,
+          "zone_type": null,
+          "score": 0,
+          "sweep_detected": false,
+          "sweep_info": null,
+          "fib_level": "61.8%"
         },
         "H1": {
           "zones": [
             {
               "type": "demand",
-              "high": 1.33707,
-              "low": 1.33503,
+              "high": 1.39926,
+              "low": 1.39837,
               "strength": "strong",
-              "index": 39
+              "index": 36
             },
             {
-              "type": "supply",
-              "high": 1.34182,
-              "low": 1.34052,
+              "type": "demand",
+              "high": 1.39929,
+              "low": 1.39869,
               "strength": "strong",
-              "index": 68
+              "index": 45
+            },
+            {
+              "type": "demand",
+              "high": 1.3995,
+              "low": 1.39876,
+              "strength": "strong",
+              "index": 53
+            },
+            {
+              "type": "demand",
+              "high": 1.39679,
+              "low": 1.3951,
+              "strength": "strong",
+              "index": 67
             }
           ],
           "fibs": {
-            "fib_618": 1.33667864,
-            "fib_786": 1.33491128
+            "fib_618": 1.39810348,
+            "fib_786": 1.3989199600000002
           },
-          "trend": "bullish",
+          "trend": "bearish",
           "price_in_zone": true,
           "price_at_fib": true,
-          "zone_type": "supply",
+          "zone_type": "demand",
           "score": 0,
           "sweep_detected": false,
           "sweep_info": null,
           "active_zone": {
-            "type": "supply",
-            "high": 1.34182,
-            "low": 1.34052,
+            "type": "demand",
+            "high": 1.39679,
+            "low": 1.3951,
             "strength": "strong",
-            "index": 68
+            "index": 67
           },
           "fib_level": "61.8%"
         }
       },
-      "current_price": 1.34168,
-      "position_size": 0.11,
+      "current_price": 1.39681,
+      "position_size": 0.19,
       "risk_amount": 50.0
     }
   ]
