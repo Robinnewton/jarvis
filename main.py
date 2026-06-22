@@ -196,7 +196,18 @@ def run_scan(config):
                 print(f"    >>> TP: {result['take_profit']:.5f}")
                 print(f"    >>> Position: {result.get('position_size', 'N/A')} lots")
             else:
-                print(f"    Score: {result['score']}% - No signal")
+                # Check if price is approaching a zone on any timeframe
+                approaching = False
+                for tf_name, tf_data in result.get('timeframes', {}).items():
+                    if tf_data and tf_data.get('price_approaching'):
+                        zone = tf_data.get('approaching_zone', {})
+                        zone_type = tf_data.get('approaching_type', '')
+                        direction = 'SELL' if zone_type == 'supply' else 'BUY'
+                        print(f"    ⚠️  APPROACHING {zone_type.upper()} ZONE on {tf_name} — Watch for {direction}")
+                        print(f"    Zone: {zone.get('low', 0):.5f} — {zone.get('high', 0):.5f}")
+                        approaching = True
+                if not approaching:
+                    print(f"    Score: {result['score']}% - No signal")
 
         except Exception as e:
             print(f"    Error: {e}")
